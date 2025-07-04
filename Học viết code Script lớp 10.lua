@@ -122,7 +122,7 @@ local function updateList()
 end
 updateList()
 
--- Nút TPA
+-- Nút TPA (ĐÃ SỬA TOÀN BỘ PHẦN TP)
 local tp = Instance.new("TextButton", frame)
 tp.Size = UDim2.new(1, -20, 0, 40)
 tp.Position = UDim2.new(0, 10, 1, -50)
@@ -132,13 +132,19 @@ tp.TextSize = 20
 tp.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 tp.TextColor3 = Color3.new(1, 1, 1)
 
+-- ✅ Phần TP đúng chuẩn
 tp.MouseButton1Click:Connect(function()
 	if selectedPlayer and selectedPlayer.Character and selectedPlayer.Character:FindFirstChild("HumanoidRootPart") then
 		local me = game.Players.LocalPlayer.Character
 		local hrp = me and me:FindFirstChild("HumanoidRootPart")
-		if hrp then
-			local offset = hrp.CFrame.LookVector * 3 + Vector3.new(0, 0, 1)
-			selectedPlayer.Character:MoveTo(hrp.Position + offset)
+		local targetHRP = selectedPlayer.Character:FindFirstChild("HumanoidRootPart")
+		if hrp and targetHRP then
+			local offset = hrp.CFrame + Vector3.new(3, 0, 0) -- đứng cạnh bạn
+			for i = 1, 6 do
+				targetHRP.CFrame = offset
+				wait(0.05)
+			end
+			print("✅ Đã TP " .. selectedPlayer.Name .. " đến bạn!")
 		end
 	end
 end)
